@@ -3,7 +3,7 @@ const moment = require("moment-timezone");
 module.exports = {
   config: {
     name: "pending",
-    version: "2.2",
+    version: "2.3",
     author: "xalman",
     countDown: 5,
     role: 2,
@@ -29,13 +29,13 @@ module.exports = {
     const input = event.body.trim();
     const { threadID, messageID } = event;
     const prefix = global.GoatBot?.config?.prefix || "/";
+    const botNickname = "💋♡your baby♡💌🦋 くめ";
     let done = 0;
 
     const dateTime = moment()
       .tz("Asia/Dhaka")
       .format("ddd, YYYY-MMM-DD, HH:mm:ss");
 
-    // ❌ CANCEL / REFUSE
     if (/^(c|cancel)/i.test(input)) {
       const nums = input.replace(/^(c|cancel)/i, "").trim().split(/\s+/);
 
@@ -43,10 +43,7 @@ module.exports = {
         if (!Number(n) || n < 1 || n > Reply.queue.length)
           return api.sendMessage(getLang("invalid", n), threadID, messageID);
 
-        await api.removeUserFromGroup(
-          api.getCurrentUserID(),
-          Reply.queue[n - 1].threadID
-        );
+        const targetThreadID = Reply.queue[n - 1].threadID;
 
         api.sendMessage(
 `╭─🚫 ACCESS DENIED 🚫─╮
@@ -55,9 +52,10 @@ module.exports = {
 │ ⚡ Owner : xalman
 │ ⏰ Date/Time : ${dateTime}
 ╰──────────────────╯`,
-          Reply.queue[n - 1].threadID
+          targetThreadID
         );
 
+        await api.removeUserFromGroup(api.getCurrentUserID(), targetThreadID);
         done++;
       }
 
@@ -68,11 +66,13 @@ module.exports = {
       );
     }
 
-    // ✅ APPROVE
     const nums = input.split(/\s+/);
     for (const n of nums) {
       if (!Number(n) || n < 1 || n > Reply.queue.length)
         return api.sendMessage(getLang("invalid", n), threadID, messageID);
+
+      const targetThreadID = Reply.queue[n - 1].threadID;
+      const botID = api.getCurrentUserID();
 
       api.sendMessage(
 `╭─✨ SYSTEM GOAT ✨─╮
@@ -81,8 +81,14 @@ module.exports = {
 │ ⚡ Owner : xalman
 │ ⏰ Date/Time : ${dateTime}
 ╰─✅ Access Granted─╯`,
-        Reply.queue[n - 1].threadID
+        targetThreadID
       );
+
+      try {
+        await api.changeNickname(botNickname, targetThreadID, botID);
+      } catch (e) {
+        console.log(`Nickname set error for ${targetThreadID}: `, e);
+      }
 
       done++;
     }
@@ -111,7 +117,7 @@ module.exports = {
         return api.sendMessage(getLang("empty"), threadID, messageID);
 
       for (const g of groups)
-        text += `${i++}. ${g.name} → ${g.threadID}\n`;
+        text += `${i++}. ${g.name || "Unnamed Group"} → ${g.threadID}\n`;
 
       api.sendMessage(
         getLang("list", groups.length, text),
