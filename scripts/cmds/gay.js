@@ -5,25 +5,26 @@ const fs = require("fs-extra");
 module.exports = {
   config: {
     name: "gay",
-    version: "3.0",
+    version: "3.1",
     author: "xalman",
     countDown: 5,
     role: 0,
-    shortDescription: "Gay canvas with strict mention/reply check",
-    longDescription: "Places PFPs on background only if a user is mentioned or replied to.",
+    shortDescription: "Gay canvas with fixed syntax",
+    longDescription: "Places PFPs on background with fixed destructuring and blacklist.",
     category: "fun",
     guide: "{pn} @tag | {pn} [reply]"
   },
 
   onStart: async function ({ api, event, args, usersData }) {
-    const { threadID, messageID, senderID, mentions, type, messageReply } 
+
+    const { threadID, messageID, senderID, mentions, type, messageReply } = event; 
+    
     let targetID;
     if (type === "message_reply") {
       targetID = messageReply.senderID;
     } else if (Object.keys(mentions).length > 0) {
       targetID = Object.keys(mentions)[0];
     } else {
-
       return api.sendMessage("❌ Please mention someone or reply to their message to use this command!", threadID, messageID);
     }
 
@@ -71,6 +72,7 @@ module.exports = {
       }, threadID, () => fs.unlinkSync(path), messageID);
 
     } catch (e) {
+      console.error(e);
       return api.sendMessage("❌ Error: Image generate kora somvob hoyni.", threadID, messageID);
     }
   }
