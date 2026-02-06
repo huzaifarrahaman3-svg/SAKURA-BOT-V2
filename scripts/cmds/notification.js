@@ -61,7 +61,7 @@ module.exports = {
 
     
     const owner = "negative xalman (nx)"; 
-    const fb = "Le Dung";
+    const fb = "Maybe NX";
 
     
     const formSend = {
