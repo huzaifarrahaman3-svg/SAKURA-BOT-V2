@@ -21,7 +21,7 @@ module.exports = {
     author: "Vex_Kshitiz", 
     version: "1.0",
     cooldowns: 5,
-    role: 2,
+    role: 0,
     shortDescription: "18+ tiktok video",
     longDescription: "18+ tiktok video",
     category: "18+",
