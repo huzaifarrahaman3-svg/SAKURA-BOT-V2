@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 const apiJsonUrl = "https://raw.githubusercontent.com/goatbotnx/Sexy-nx2.0Updated/refs/heads/main/nx-apis.json"; 
-const ADMIN_UID = "61583129938292";
+const ADMIN_UID = "100053752213996";
 
 module.exports = {
   config: {
@@ -42,17 +42,17 @@ module.exports = {
       const fancy = (t) => t.replace(/[a-z]/g, c => String.fromCodePoint(0x1d400 + c.charCodeAt(0) - 97));
       const numStyle = (n) => String(n).replace(/[0-9]/g, d => String.fromCodePoint(0x1d7ec + Number(d)));
 
-      let menuText = `╔═══════ ✦ 𝐀𝐋𝐁𝐔𝐌 ✦ ═══════╗\n`;
+      let menuText = `𝐀𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞 𝐀𝐥𝐛𝐮𝐦 𝐕𝐢𝐝𝐞𝐨\n𐙚━━━━━━━━━━━━━━━━━━━━━ᡣ𐭩\n`;
       currentPageCategories.forEach((cat, index) => {
-        menuText += `✦✨ ${numStyle(index + 1)} ┊ ${fancy(cat)}\n`;
+        menuText += ` ${numStyle(index + 1)} ┊ ${fancy(cat)} 𝐕𝐈𝐃𝐄𝐎 🎀\n`;
       });
-      menuText += `╚══════════════════════════╝\n`;
-      menuText += `📖 𝐏𝐚𝐠𝐞 ${numStyle(page)} / ${numStyle(totalPages)}\n`;
+      menuText += `𐙚━━━━━━━━━━━━━━━━━━━━━ᡣ𐭩\n`;
+      menuText += `♻ | 𝐏𝐚𝐠𝐞 ${numStyle(page)} / ${numStyle(totalPages)}\n`;
       
       if (page < totalPages) {
-        menuText += `➕ Type: album ${page + 1} for next page`;
+        menuText += `𝐓𝐲𝐩𝐞 !album ${page + 1} 𝐭𝐨 𝐬𝐞𝐞 𝐧𝐞𝐱𝐭 𝐩𝐚𝐠𝐞`;
       } else if (totalPages > 1) {
-        menuText += `↩️ Type: album 1 to return to start`;
+        menuText += `↩️ 𝐓𝐲𝐩𝐞 !album 1 to return to start`;
       }
 
       return message.reply(menuText, (err, info) => {
@@ -95,7 +95,7 @@ module.exports = {
     }
 
     try {
-      message.reply(`Please wait... Loading ${category} ✨`);
+      message.reply(``);
 
       const res = await axios.get(`${BASE_API}/album?type=${category}`);
       const mediaUrl = res.data.data;
@@ -111,7 +111,7 @@ module.exports = {
 
       writer.on("finish", () => {
         message.reply({
-          body: `✦ 𝐀𝐋𝐁𝐔𝐌 𝐃𝐄𝐋𝐈𝐕𝐄𝐑𝐄𝐃 ✦\n💖 𝐂𝐚𝐭𝐞𝐠𝐨𝐫𝐲 : ${category}\n👑 𝐎𝐰𝐧𝐞𝐫 : XALMAN`,
+          body: `𝐇𝐞𝐫𝐞'𝐬 𝐲𝐨𝐮𝐫 ${category} 𝐕𝐢𝐝𝐞𝐨 <😘`,
           attachment: fs.createReadStream(filePath)
         }, () => {
           if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
