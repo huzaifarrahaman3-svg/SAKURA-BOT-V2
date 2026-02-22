@@ -24,7 +24,7 @@ module.exports = {
       }
 
       api.sendMessage({
-        body: "😆 একজন গ্রুপ ছেড়ে চলে গেছে!",
+        body: "কি মজা একজন বিদেয় হয়েছে!",
         attachment: fs.createReadStream(videoPath)
       }, threadID);
 
